@@ -12,6 +12,9 @@ from alien import alien
 # pygame setup
 pygame.init()
 
+offsetX = 150
+offsetY = 200
+
 #constantes
 tilesize = 32 # taille d'une tuile IG
 size = (20, 10) # taille du monde
@@ -30,10 +33,11 @@ laby = Labyrinthe(size[0], size[1])
 laby.load_from_file(level)
 laby.set_color(color["wall_color"])
 
-grid = Grid(size[0], size[1],tilesize)
+grid = Grid(size[0], size[1], tilesize)
 grid.set_color(color["grid_color"])
 
 screen = pygame.display.set_mode((1900, 1000))
+
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -100,15 +104,19 @@ while kb.running:
     screen.fill(color["ground_color"])
 
     laby.draw(screen, tilesize)
+    laby.set_offset(offsetX, offsetY)
 
     if kb.sg:
         grid.draw(screen)
     grid.displayExit(screen, color["exit_color"], laby.finish[0], laby.finish[1])
+    grid.set_offset(offsetX, offsetY)
 
 
-    pygame.draw.rect(screen, color["player_color"], pygame.Rect(player_pos.x*tilesize, player_pos.y*tilesize, tilesize, tilesize))
+    pygame.draw.rect(screen, color["player_color"], pygame.Rect(player_pos.x * tilesize + offsetX, player_pos.y * tilesize + offsetY, tilesize, tilesize))
     items.draw(screen)
+    items.set_offset(offsetX, offsetY)
     aliens.draw(screen)
+    aliens.set_offset(offsetX, offsetY)
     
     # affichage des modification du screen_view
     pygame.display.flip()

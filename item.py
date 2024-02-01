@@ -5,12 +5,17 @@ class item:
         self.item = [[10,3]]
         self.tilesize = tilesize
         self.color = color
+        self.offsetX = 0
+        self.offsetY = 0
         
         
     def draw(self, screen):
         for elt in self.item:
-            pygame.draw.polygon(screen,self.color,((elt[0]*self.tilesize + (self.tilesize/2), elt[1]*self.tilesize), (elt[0]*self.tilesize, elt[1]*self.tilesize  + (self.tilesize/2)), (elt[0]*self.tilesize + (self.tilesize/2), elt[1]*self.tilesize  + self.tilesize),  (elt[0]*self.tilesize + self.tilesize, elt[1]*self.tilesize + (self.tilesize/2))) )
+            pygame.draw.polygon(screen,self.color,((elt[0]*self.tilesize + (self.tilesize/2) + self.offsetX, elt[1]*self.tilesize + self.offsetY), (elt[0]*self.tilesize + self.offsetX, elt[1]*self.tilesize  + (self.tilesize/2) + self.offsetY), (elt[0]*self.tilesize + (self.tilesize/2) + self.offsetX, elt[1]*self.tilesize  + self.tilesize + self.offsetY),  (elt[0]*self.tilesize + self.tilesize + self.offsetX, elt[1]*self.tilesize + (self.tilesize/2) + self.offsetY)) )
 
+    def set_offset(self, x, y):
+        self.offsetX = x
+        self.offsetY = y
 
     def get_item(self, player_x, player_y):
         for elt in self.item:
