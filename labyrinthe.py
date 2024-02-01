@@ -1,4 +1,5 @@
 import pygame
+from read_colors import read_color_parameters
 from utils import convert_data
 
 class Labyrinthe :
@@ -13,11 +14,20 @@ class Labyrinthe :
         self.finish = ""
         self.end = False
         #attention création d'une matrice en Y X
-        self.matrice = [ [0]* self.sizeX for _ in range(self.sizeY) ]
+        self.matrice = [[0]* self.sizeX for _ in range(self.sizeY)]
+        self.offsetX = 0
+        self.offsetY = 0
+        read = read_color_parameters()
+        read.readColors("color.ini")
+        self.colors = read.c
 
     def set_color(self, v):
         """Fixe la couleur pour dessiner les murs"""
         self.color = v
+
+    def set_offset(self, x, y):
+        self.offsetX = x
+        self.offsetY = y
 
     def display_on_console(self):
         """Sortie console du labyrinthe"""
@@ -100,13 +110,23 @@ class Labyrinthe :
         if x>=self.sizeX or x<0 or y<0 or y>=self.sizeY:
             return 1
         return self.matrice[y][x] == 1
+    
+    def hit_water(self, x, y):
+        """indique si l'élément (x,y) est un mur"""
+        if x >= self.sizeX or x < 0 or y < 0 or y >= self.sizeY:
+            return 1
+        return self.matrice[y][x] == 103
 
     def draw(self, screen, tilesize):
         """dessine le labyrithne sur la fenètre screen"""
         for j in range(self.sizeY):
             for i in range(self.sizeX):
                 if self.matrice[j][i] == 1:
-                    pygame.draw.rect(screen, self.color , (i * tilesize, j * tilesize, tilesize, tilesize))
+                    pygame.draw.rect(screen, self.color , (i * tilesize + self.offsetX , j * tilesize + self.offsetY, tilesize, tilesize))
+                elif self.matrice[j][i] == 103:
+                    pygame.draw.rect(screen, self.colors["water_color"] , (i * tilesize + self.offsetX , j * tilesize + self.offsetY, tilesize, tilesize))
+
+
 
 
 #laby = Labyrinthe(20,10)

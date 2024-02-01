@@ -12,9 +12,12 @@ from alien import alien
 # pygame setup
 pygame.init()
 
+offsetX = 0
+offsetY = 0
+
 #constantes
 tilesize = 32 # taille d'une tuile IG
-size = (20, 10) # taille du monde
+size = (40, 25) # taille du monde
 fps = 30 # fps du jeu
 player_speed = 150 # vitesse du joueur
 next_move = 0 #tic avant déplacement
@@ -24,16 +27,21 @@ read = read_color_parameters()
 read.readColors("color.ini")
 color = read.c
 
-level = "data/laby-02.dat"
+read = read_color_parameters()
+read.readColors("color.ini")
+color = read.c
+
+level = "data/laby-03.dat"
 
 laby = Labyrinthe(size[0], size[1])
 laby.load_from_file(level)
 laby.set_color(color["wall_color"])
 
-grid = Grid(size[0], size[1],tilesize)
+grid = Grid(size[0], size[1], tilesize)
 grid.set_color(color["grid_color"])
 
 screen = pygame.display.set_mode((1900, 1000))
+
 clock = pygame.time.Clock()
 running = True
 dt = 0
@@ -74,6 +82,9 @@ while kb.running:
             player_pos.x, player_pos.y = new_x, new_y
             kb.n -= player_speed
             laby.hit_finish(player_pos.x, player_pos.y)
+        
+        if laby.hit_water(new_x, new_y):
+            kb.n -= player_speed // 2
 
         if kb.sp:
             print("pos: ",[player_pos.x, player_pos.y])
@@ -100,15 +111,19 @@ while kb.running:
     screen.fill(color["ground_color"])
 
     laby.draw(screen, tilesize)
+    laby.set_offset(offsetX, offsetY)
 
     if kb.sg:
         grid.draw(screen)
     grid.displayExit(screen, color["exit_color"], laby.finish[0], laby.finish[1])
+    grid.set_offset(offsetX, offsetY)
 
 
-    pygame.draw.rect(screen, color["player_color"], pygame.Rect(player_pos.x*tilesize, player_pos.y*tilesize, tilesize, tilesize))
+    pygame.draw.rect(screen, color["player_color"], pygame.Rect(player_pos.x * tilesize + offsetX, player_pos.y * tilesize + offsetY, tilesize, tilesize))
     items.draw(screen)
+    items.set_offset(offsetX, offsetY)
     aliens.draw(screen)
+    aliens.set_offset(offsetX, offsetY)
     
     # affichage des modification du screen_view
     pygame.display.flip()
