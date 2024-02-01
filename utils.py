@@ -16,5 +16,7 @@ def convert_data(v):
         return 100
     elif v=="A":
         return 101
+    elif v=="E":
+        return 103
     else:
         return int(v)

@@ -12,12 +12,12 @@ from alien import alien
 # pygame setup
 pygame.init()
 
-offsetX = 150
-offsetY = 200
+offsetX = 0
+offsetY = 0
 
 #constantes
 tilesize = 32 # taille d'une tuile IG
-size = (20, 10) # taille du monde
+size = (40, 25) # taille du monde
 fps = 30 # fps du jeu
 player_speed = 150 # vitesse du joueur
 next_move = 0 #tic avant déplacement
@@ -27,7 +27,11 @@ read = read_color_parameters()
 read.readColors("color.ini")
 color = read.c
 
-level = "data/laby-02.dat"
+read = read_color_parameters()
+read.readColors("color.ini")
+color = read.c
+
+level = "data/laby-03.dat"
 
 laby = Labyrinthe(size[0], size[1])
 laby.load_from_file(level)
