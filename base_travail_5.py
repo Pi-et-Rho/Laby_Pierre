@@ -82,6 +82,9 @@ while kb.running:
             player_pos.x, player_pos.y = new_x, new_y
             kb.n -= player_speed
             laby.hit_finish(player_pos.x, player_pos.y)
+        
+        if laby.hit_water(new_x, new_y):
+            kb.n -= player_speed // 2
 
         if kb.sp:
             print("pos: ",[player_pos.x, player_pos.y])

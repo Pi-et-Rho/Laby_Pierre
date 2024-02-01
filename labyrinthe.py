@@ -115,7 +115,7 @@ class Labyrinthe :
         """indique si l'élément (x,y) est un mur"""
         if x >= self.sizeX or x < 0 or y < 0 or y >= self.sizeY:
             return 1
-        return self.matrice[y][x] == 1
+        return self.matrice[y][x] == 103
 
     def draw(self, screen, tilesize):
         """dessine le labyrithne sur la fenètre screen"""
