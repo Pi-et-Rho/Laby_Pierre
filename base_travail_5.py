@@ -21,6 +21,7 @@ size = (40, 25) # taille du monde
 fps = 30 # fps du jeu
 player_speed = 150 # vitesse du joueur
 next_move = 0 #tic avant déplacement
+player_health = 100
 
 # color
 read = read_color_parameters()
@@ -90,6 +91,12 @@ while kb.running:
         if laby.hit_water(new_x, new_y):
             kb.n -= player_speed // 2
 
+        if laby.hit_lava(new_x, new_y):
+            player_health -= 10 
+            print("Ouch! Health:", player_health)
+            if player_health <= 0:
+                print("Game Over! Player ran out of health.")
+
         if kb.sp:
             print("pos: ",[player_pos.x, player_pos.y])
             
@@ -141,6 +148,9 @@ while kb.running:
     aliens1.set_offset(offsetX, offsetY)
     aliens2.set_offset(offsetX, offsetY)
     aliens3.set_offset(offsetX, offsetY)
+
+    pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(10, 10, 200, 20))
+    pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(10, 10, player_health * 2, 20))
     
     # affichage des modification du screen_view
     pygame.display.flip()
