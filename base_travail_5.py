@@ -53,8 +53,12 @@ keys= { "UP":0 , "DOWN":0, "LEFT":0, "RIGHT":0 }
 alien_direction = random.choice(['UP', 'Down', 'LEFT', 'RIGHT'])
 
 player_pos = Pos(laby.start[0],laby.start[1])
-items = item(tilesize, color["item_color"])
-aliens = alien(tilesize, color["alien_color"])
+items1 = item(tilesize, color["item_color"])
+items2 = item(tilesize, color["item_color"])
+items3 = item(tilesize, color["item_color"])
+aliens1 = alien(tilesize, color["alien_color"])
+aliens2 = alien(tilesize, color["alien_color"])
+aliens3 = alien(tilesize, color["alien_color"])
 alien_move_counter = 0
 
 kb = keyboard(keys)
@@ -89,16 +93,21 @@ while kb.running:
         if kb.sp:
             print("pos: ",[player_pos.x, player_pos.y])
             
-        if items.get_item(player_pos.x, player_pos.y):
+        if items1.get_item(player_pos.x, player_pos.y) or items2.get_item(player_pos.x, player_pos.y) or items3.get_item(player_pos.x, player_pos.y):
             print("Validé")
+
             
         if kb.sp:
             print("pos: ", [player_pos.x, player_pos.y])
             
         #déplacement des aliens
-        aliens.update_position(laby)
+        aliens1.update_position(laby)
+        aliens2.update_position(laby)
+        aliens3.update_position(laby)
         #collision avec alien
-        aliens.check_collision_with_player(player_pos)
+        aliens1.check_collision_with_player(player_pos)
+        aliens2.check_collision_with_player(player_pos)
+        aliens3.check_collision_with_player(player_pos)
         
         alien_move_counter += 1
         if alien_move_counter >= 2:
@@ -120,10 +129,18 @@ while kb.running:
 
 
     pygame.draw.rect(screen, color["player_color"], pygame.Rect(player_pos.x * tilesize + offsetX, player_pos.y * tilesize + offsetY, tilesize, tilesize))
-    items.draw(screen)
-    items.set_offset(offsetX, offsetY)
-    aliens.draw(screen)
-    aliens.set_offset(offsetX, offsetY)
+    items1.draw(screen)
+    items2.draw(screen)
+    items3.draw(screen)
+    items1.set_offset(offsetX, offsetY)
+    items2.set_offset(offsetX, offsetY)
+    items3.set_offset(offsetX, offsetY)
+    aliens1.draw(screen)
+    aliens2.draw(screen)
+    aliens3.draw(screen)
+    aliens1.set_offset(offsetX, offsetY)
+    aliens2.set_offset(offsetX, offsetY)
+    aliens3.set_offset(offsetX, offsetY)
     
     # affichage des modification du screen_view
     pygame.display.flip()

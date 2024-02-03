@@ -3,7 +3,7 @@ import random
 
 class alien:
     def __init__(self, tilesize, color):
-        self.item = [[10,5]]
+        self.item = [[10,10]]
         self.tilesize = tilesize
         self.color = color
         self.direction = random.choice(['UP', 'DOWN', 'LEFT', 'RIGHT'])
@@ -13,7 +13,7 @@ class alien:
         
     def draw(self, screen):
         for elt in self.item:
-            pygame.draw.circle(screen, self.color, [elt[0] * self.tilesize + self.tilesize // 2 + self.offsetX, elt[1] * self.tilesize + self.tilesize // 2 + self.offsetY], 15)
+            pygame.draw.circle(screen, self.color, (elt[0] * self.tilesize + self.tilesize // 2 + self.offsetX, elt[1] * self.tilesize + self.tilesize // 2 + self.offsetY), 15)
 
     def set_offset(self, x, y):
         self.offsetX = x

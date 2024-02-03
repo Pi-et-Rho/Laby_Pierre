@@ -2,7 +2,7 @@ import pygame
 
 class item:
     def __init__(self, tilesize, color):
-        self.item = [[10,3]]
+        self.item = [[10,10], [12, 2], [36, 2]]
         self.tilesize = tilesize
         self.color = color
         self.offsetX = 0
