@@ -100,8 +100,11 @@ while kb.running:
         if kb.sp:
             print("pos: ",[player_pos.x, player_pos.y])
             
-        if items1.get_item(player_pos.x, player_pos.y) or items2.get_item(player_pos.x, player_pos.y) or items3.get_item(player_pos.x, player_pos.y):
+        if items1.get_diamond(player_pos.x, player_pos.y):
             print("Validé")
+        if items2.get_health(player_pos.x, player_pos.y):
+            print("Soigné")
+            player_health = 100
 
             
         if kb.sp:
@@ -136,12 +139,10 @@ while kb.running:
 
 
     pygame.draw.rect(screen, color["player_color"], pygame.Rect(player_pos.x * tilesize + offsetX, player_pos.y * tilesize + offsetY, tilesize, tilesize))
-    items1.draw(screen)
-    items2.draw(screen)
-    items3.draw(screen)
+    items1.draw_diamond(screen)
+    items2.draw_health(screen, 10)
     items1.set_offset(offsetX, offsetY)
     items2.set_offset(offsetX, offsetY)
-    items3.set_offset(offsetX, offsetY)
     aliens1.draw(screen)
     aliens2.draw(screen)
     aliens3.draw(screen)
