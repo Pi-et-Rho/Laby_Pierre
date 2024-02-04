@@ -36,7 +36,9 @@ level = "data/laby-03.dat"
 
 laby = Labyrinthe(size[0], size[1])
 laby.load_from_file(level)
-laby.set_color(color["wall_color"])
+laby.load_wall_texture("Textures\Stone_Bricks.png", tilesize)
+laby.load_water_texture("Textures\Blue_Concrete.png", tilesize)
+laby.load_lava_texture("Textures\Orange_Concrete.png", tilesize)
 
 grid = Grid(size[0], size[1], tilesize)
 grid.set_color(color["grid_color"])
