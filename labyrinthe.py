@@ -29,6 +29,10 @@ class Labyrinthe :
         self.wall_texture = pygame.image.load(texture_path)
         self.wall_texture = pygame.transform.scale(self.wall_texture, (tilesize, tilesize))
 
+    def load_ground_texture(self, texture_path, tilesize):
+        self.ground_texture = pygame.image.load(texture_path)
+        self.ground_texture = pygame.transform.scale(self.ground_texture, (tilesize, tilesize))
+
     def load_water_texture(self, texture_path, tilesize):
         self.water_texture = pygame.image.load(texture_path)
         self.water_texture = pygame.transform.scale(self.water_texture, (tilesize, tilesize))
@@ -140,6 +144,8 @@ class Labyrinthe :
             for i in range(self.sizeX):
                 if self.matrice[j][i] == 1:
                     screen.blit(self.wall_texture, (i * tilesize + self.offsetX, j * tilesize + self.offsetY))
+                elif self.matrice[j][i] == 0:
+                    screen.blit(self.ground_texture, (i * tilesize + self.offsetX, j * tilesize + self.offsetY))
                 elif self.matrice[j][i] == 102:
                     screen.blit(self.water_texture, (i * tilesize + self.offsetX, j * tilesize + self.offsetY))
                 elif self.matrice[j][i] == 103:

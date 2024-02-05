@@ -28,15 +28,13 @@ read = read_color_parameters()
 read.readColors("color.ini")
 color = read.c
 
-read = read_color_parameters()
-read.readColors("color.ini")
-color = read.c
 
 level = "data/laby-03.dat"
 
 laby = Labyrinthe(size[0], size[1])
 laby.load_from_file(level)
 laby.load_wall_texture("Textures\Stone_Bricks.png", tilesize)
+laby.load_ground_texture("Textures\Ground.png", tilesize)
 laby.load_water_texture("Textures\Blue_Concrete.png", tilesize)
 laby.load_lava_texture("Textures\Orange_Concrete.png", tilesize)
 
@@ -56,12 +54,14 @@ keys= { "UP":0 , "DOWN":0, "LEFT":0, "RIGHT":0 }
 alien_direction = random.choice(['UP', 'Down', 'LEFT', 'RIGHT'])
 
 player_pos = Pos(laby.start[0],laby.start[1])
-items1 = item(tilesize, color["item_color"])
-items2 = item(tilesize, color["item_color"])
-items3 = item(tilesize, color["item_color"])
-aliens1 = alien(tilesize, color["alien_color"])
-aliens2 = alien(tilesize, color["alien_color"])
-aliens3 = alien(tilesize, color["alien_color"])
+player_head_texture = pygame.image.load("Textures\Player.png")
+health_item_texture = pygame.image.load("Textures\Heal.png")
+items1 = item(tilesize, color["item_color"], "Textures\Diamonds.png")
+items2 = item(tilesize, color["item_color"], "Textures\Diamonds.png")
+items3 = item(tilesize, color["item_color"], "Textures\Diamonds.png")
+aliens1 = alien(tilesize, color["alien_color"], "Textures\Alien.png")
+aliens2 = alien(tilesize, color["alien_color"], "Textures\Alien.png")
+aliens3 = alien(tilesize, color["alien_color"], "Textures\Alien.png")
 alien_move_counter = 0
 
 kb = keyboard(keys)
@@ -139,10 +139,11 @@ while kb.running:
     grid.displayExit(screen, color["exit_color"], laby.finish[0], laby.finish[1])
     grid.set_offset(offsetX, offsetY)
 
-
-    pygame.draw.rect(screen, color["player_color"], pygame.Rect(player_pos.x * tilesize + offsetX, player_pos.y * tilesize + offsetY, tilesize, tilesize))
+    
+    player_head_texture_resized = pygame.transform.scale(player_head_texture, (tilesize, tilesize))
+    screen.blit(player_head_texture_resized, (player_pos.x * tilesize + offsetX, player_pos.y * tilesize + offsetY))
     items1.draw_diamond(screen)
-    items2.draw_health(screen, 10)
+    items2.draw_health_texture(screen, health_item_texture)
     items1.set_offset(offsetX, offsetY)
     items2.set_offset(offsetX, offsetY)
     aliens1.draw(screen)
