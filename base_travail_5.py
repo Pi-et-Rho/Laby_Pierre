@@ -8,6 +8,7 @@ from read_colors import read_color_parameters
 from keyboard import keyboard
 from item import item
 from alien import alien
+from chargeur import load_labyrinthe
 
 # pygame setup
 pygame.init()
@@ -33,10 +34,10 @@ level = "data/laby-03.dat"
 
 laby = Labyrinthe(size[0], size[1])
 laby.load_from_file(level)
-laby.load_wall_texture("Textures\Stone_Bricks.png", tilesize)
-laby.load_ground_texture("Textures\Ground.png", tilesize)
-laby.load_water_texture("Textures\Blue_Concrete.png", tilesize)
-laby.load_lava_texture("Textures\Orange_Concrete.png", tilesize)
+laby.load_wall_texture(r"Textures\Stone_Bricks.png", tilesize)
+laby.load_ground_texture(r"Textures\Ground.png", tilesize)
+laby.load_water_texture(r"Textures\Blue_Concrete.png", tilesize)
+laby.load_lava_texture(r"Textures\Orange_Concrete.png", tilesize)
 
 grid = Grid(size[0], size[1], tilesize)
 grid.set_color(color["grid_color"])
@@ -54,14 +55,14 @@ keys= { "UP":0 , "DOWN":0, "LEFT":0, "RIGHT":0 }
 alien_direction = random.choice(['UP', 'Down', 'LEFT', 'RIGHT'])
 
 player_pos = Pos(laby.start[0],laby.start[1])
-player_head_texture = pygame.image.load("Textures\Player.png")
-health_item_texture = pygame.image.load("Textures\Heal.png")
-items1 = item(tilesize, color["item_color"], "Textures\Diamonds.png")
-items2 = item(tilesize, color["item_color"], "Textures\Diamonds.png")
-items3 = item(tilesize, color["item_color"], "Textures\Diamonds.png")
-aliens1 = alien(tilesize, color["alien_color"], "Textures\Alien.png")
-aliens2 = alien(tilesize, color["alien_color"], "Textures\Alien.png")
-aliens3 = alien(tilesize, color["alien_color"], "Textures\Alien.png")
+player_head_texture = pygame.image.load(r"Textures\Player.png")
+health_item_texture = pygame.image.load(r"Textures\Heal.png")
+items1 = item(tilesize, color["item_color"], r"Textures\Diamonds.png")
+items2 = item(tilesize, color["item_color"], r"Textures\Diamonds.png")
+items3 = item(tilesize, color["item_color"], r"Textures\Diamonds.png")
+aliens1 = alien(tilesize, color["alien_color"], r"Textures\Alien.png")
+aliens2 = alien(tilesize, color["alien_color"], r"Textures\Alien.png")
+aliens3 = alien(tilesize, color["alien_color"], r"Textures\Alien.png")
 alien_move_counter = 0
 
 kb = keyboard(keys)
