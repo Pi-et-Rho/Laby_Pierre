@@ -8,17 +8,21 @@ from read_colors import read_color_parameters
 from keyboard import keyboard
 from item import item
 from alien import alien
-from chargeur import load_labyrinthe
+from chargeur import Loader
 
 # pygame setup
 pygame.init()
+
+level = "data/laby-03.ini"
+
+data = Loader(level)
 
 offsetX = 0
 offsetY = 0
 
 #constantes
-tilesize = 32 # taille d'une tuile IG
-size = (40, 25) # taille du monde
+tilesize = data.tilesize # taille d'une tuile IG
+size = (data.sizex, data.sizey) # taille du monde
 fps = 30 # fps du jeu
 player_speed = 150 # vitesse du joueur
 next_move = 0 #tic avant déplacement
@@ -30,10 +34,10 @@ read.readColors("color.ini")
 color = read.c
 
 
-level = "data/laby-03.dat"
 
 laby = Labyrinthe(size[0], size[1])
-laby.load_from_file(level)
+laby.matrice = data.map
+laby.setAD()
 laby.load_wall_texture(r"Textures\Stone_Bricks.png", tilesize)
 laby.load_ground_texture(r"Textures\Ground.png", tilesize)
 laby.load_water_texture(r"Textures\Blue_Concrete.png", tilesize)
@@ -60,9 +64,10 @@ health_item_texture = pygame.image.load(r"Textures\Heal.png")
 items1 = item(tilesize, color["item_color"], r"Textures\Diamonds.png")
 items2 = item(tilesize, color["item_color"], r"Textures\Diamonds.png")
 items3 = item(tilesize, color["item_color"], r"Textures\Diamonds.png")
-aliens1 = alien(tilesize, color["alien_color"], r"Textures\Alien.png")
-aliens2 = alien(tilesize, color["alien_color"], r"Textures\Alien.png")
-aliens3 = alien(tilesize, color["alien_color"], r"Textures\Alien.png")
+
+aliens = []
+for elt in data.monsters:
+    aliens.append(alien(tilesize, color["alien_color"], r"Textures\Alien.png"))
 alien_move_counter = 0
 
 kb = keyboard(keys)
@@ -114,13 +119,10 @@ while kb.running:
             print("pos: ", [player_pos.x, player_pos.y])
             
         #déplacement des aliens
-        aliens1.update_position(laby)
-        aliens2.update_position(laby)
-        aliens3.update_position(laby)
-        #collision avec alien
-        aliens1.check_collision_with_player(player_pos)
-        aliens2.check_collision_with_player(player_pos)
-        aliens3.check_collision_with_player(player_pos)
+        for elt in aliens:
+            elt.update_position(laby)
+            elt.check_collision_with_player(player_pos)
+        #collision avec alien)
         
         alien_move_counter += 1
         if alien_move_counter >= 2:
@@ -147,12 +149,9 @@ while kb.running:
     items2.draw_health_texture(screen, health_item_texture)
     items1.set_offset(offsetX, offsetY)
     items2.set_offset(offsetX, offsetY)
-    aliens1.draw(screen)
-    aliens2.draw(screen)
-    aliens3.draw(screen)
-    aliens1.set_offset(offsetX, offsetY)
-    aliens2.set_offset(offsetX, offsetY)
-    aliens3.set_offset(offsetX, offsetY)
+    for elt in aliens:
+        elt.draw(screen)
+        elt.set_offset(offsetX, offsetY)
 
     pygame.draw.rect(screen, (255, 0, 0), pygame.Rect(10, 10, 200, 20))
     pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(10, 10, player_health * 2, 20))
