@@ -25,6 +25,22 @@ class Labyrinthe :
         """Fixe la couleur pour dessiner les murs"""
         self.color = v
 
+    def load_wall_texture(self, texture_path, tilesize):
+        self.wall_texture = pygame.image.load(texture_path)
+        self.wall_texture = pygame.transform.scale(self.wall_texture, (tilesize, tilesize))
+
+    def load_ground_texture(self, texture_path, tilesize):
+        self.ground_texture = pygame.image.load(texture_path)
+        self.ground_texture = pygame.transform.scale(self.ground_texture, (tilesize, tilesize))
+
+    def load_water_texture(self, texture_path, tilesize):
+        self.water_texture = pygame.image.load(texture_path)
+        self.water_texture = pygame.transform.scale(self.water_texture, (tilesize, tilesize))
+
+    def load_lava_texture(self, texture_path, tilesize):
+       self.lava_texture = pygame.image.load(texture_path)
+       self.lava_texture = pygame.transform.scale(self.lava_texture, (tilesize, tilesize))
+
     def set_offset(self, x, y):
         self.offsetX = x
         self.offsetY = y
@@ -112,36 +128,25 @@ class Labyrinthe :
         return self.matrice[y][x] == 1
     
     def hit_water(self, x, y):
-        """indique si l'élément (x,y) est un mur"""
+        """indique si l'élément (x,y) est de l'eau"""
+        if x >= self.sizeX or x < 0 or y < 0 or y >= self.sizeY:
+            return 1
+        return self.matrice[y][x] == 102
+    
+    def hit_lava(self, x, y):
+        """indique si l'élément (x,y) est de la lave"""
         if x >= self.sizeX or x < 0 or y < 0 or y >= self.sizeY:
             return 1
         return self.matrice[y][x] == 103
 
     def draw(self, screen, tilesize):
-        """dessine le labyrithne sur la fenètre screen"""
         for j in range(self.sizeY):
             for i in range(self.sizeX):
                 if self.matrice[j][i] == 1:
-                    pygame.draw.rect(screen, self.color , (i * tilesize + self.offsetX , j * tilesize + self.offsetY, tilesize, tilesize))
+                    screen.blit(self.wall_texture, (i * tilesize + self.offsetX, j * tilesize + self.offsetY))
+                elif self.matrice[j][i] == 0:
+                    screen.blit(self.ground_texture, (i * tilesize + self.offsetX, j * tilesize + self.offsetY))
+                elif self.matrice[j][i] == 102:
+                    screen.blit(self.water_texture, (i * tilesize + self.offsetX, j * tilesize + self.offsetY))
                 elif self.matrice[j][i] == 103:
-                    pygame.draw.rect(screen, self.colors["water_color"] , (i * tilesize + self.offsetX , j * tilesize + self.offsetY, tilesize, tilesize))
-
-
-
-
-#laby = Labyrinthe(20,10)
-#laby.load_from_file("laby-02.csv")
-#laby.display_on_console()
-
-"""
-l1 = [1, 2, 3, 4, 5]
-l2 = [6, 7, 8, 9, 10]
-l3 = [11,12,13,14,15]
-lst = []
-lst.append(l1)
-lst.append(l2)
-lst.append(l3)
-print(lst)
-
-print(lst[2][1])
-"""
+                    screen.blit(self.lava_texture, (i * tilesize + self.offsetX, j * tilesize + self.offsetY))
