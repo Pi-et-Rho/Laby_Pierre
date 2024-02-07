@@ -42,7 +42,7 @@ laby.load_lava_texture(r"Textures\Orange_Concrete.png", tilesize)
 grid = Grid(size[0], size[1], tilesize)
 grid.set_color(color["grid_color"])
 
-screen = pygame.display.set_mode((1900, 1000))
+screen = pygame.display.set_mode((1280, 800))
 
 clock = pygame.time.Clock()
 running = True
