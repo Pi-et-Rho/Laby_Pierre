@@ -18,7 +18,7 @@ class Labyrinthe :
         self.offsetX = 0
         self.offsetY = 0
         read = read_color_parameters()
-        read.readColors("color.ini")
+        read.readColors("colorLaby.ini")
         self.colors = read.c
 
     def set_color(self, v):

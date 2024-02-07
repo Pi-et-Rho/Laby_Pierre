@@ -11,3 +11,4 @@ class read_color_parameters:
                 contents[i] = contents[i].split("=")
             for elt in contents:
                 self.c[elt[0]] = elt[1]
+        return self.c

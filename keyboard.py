@@ -24,6 +24,10 @@ class keyboard:
                 if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                     self.k['RIGHT'] = 1
 
+
+                if event.key == pygame.K_ESCAPE:
+                    self.k['QUIT'] = 1
+
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_z or event.key == pygame.K_UP:
                     self.k['UP'] = 0

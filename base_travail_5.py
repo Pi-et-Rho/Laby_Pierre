@@ -30,7 +30,7 @@ player_health = 100
 
 # color
 read = read_color_parameters()
-read.readColors("color.ini")
+read.readColors("colorLaby.ini")
 color = read.c
 
 
@@ -55,7 +55,7 @@ dt = 0
 show_grid = True
 show_pos = False
 
-keys= { "UP":0 , "DOWN":0, "LEFT":0, "RIGHT":0 }
+keys= { "UP":0 , "DOWN":0, "LEFT":0, "RIGHT":0 , "QUIT":0}
 alien_direction = random.choice(['UP', 'Down', 'LEFT', 'RIGHT'])
 
 player_pos = Pos(laby.start[0],laby.start[1])
