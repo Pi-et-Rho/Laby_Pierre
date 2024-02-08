@@ -1,5 +1,6 @@
 import pygame
 import random
+from battle_manager import BattleManager
 
 class alien:
     def __init__(self, tilesize, color, texture_path):

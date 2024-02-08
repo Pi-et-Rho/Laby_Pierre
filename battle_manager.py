@@ -4,11 +4,13 @@ from keyboard import keyboard
 
 class BattleManager:
 
-    def __init__(self, player, enemy, screenSizeX, screenSizeY, colorsFile):
+    def __init__(self, player, enemy, screenSizeX, screenSizeY, colorsFile, originScreenSizeX, originScreenSizeY):
         self.p = player
         self.e = enemy
         self.x = screenSizeX
         self.y = screenSizeY
+        self.ox = originScreenSizeX
+        self.oy = originScreenSizeY
         colors = read_color_parameters()
         self.c = colors.readColors(colorsFile)
         self.screen = 0
@@ -41,8 +43,10 @@ class BattleManager:
 
 
             pygame.display.flip()
-        pygame.quit()
+            print(self.ox, self.oy)
+        self.screen = pygame.display.set_mode((self.ox,self.oy))
 
 
-game = BattleManager("", "", 800, 600, "colorFight.ini")
+if __name__ == "__main__":
+    game = BattleManager("", "", 800, 600, "colorFight.ini")
     
