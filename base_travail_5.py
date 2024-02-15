@@ -9,6 +9,7 @@ from keyboard import keyboard
 from item import item
 from alien import alien
 from chargeur import Loader
+import fight
 
 # pygame setup
 pygame.init()
@@ -122,6 +123,14 @@ while kb.running:
         for elt in aliens:
             elt.update_position(laby)
             elt.check_collision_with_player(player_pos)
+
+            if elt.check_collision_with_player(player_pos):
+                fightResult = fight.calculate_fight()
+
+                if fightResult == "party_1":
+                    aliens.pop(aliens.index(elt))
+                else:
+                    player_health-=10
         #collision avec alien)
         
         alien_move_counter += 1

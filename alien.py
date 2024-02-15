@@ -46,6 +46,7 @@ class alien:
         player_rect = pygame.Rect(player_pos.x * self.tilesize, player_pos.y * self.tilesize, self.tilesize, self.tilesize)
 
         if alien_rect.colliderect(player_rect):
-            print("Touché!")
             # Handle collision with player
             self.direction = random.choice(['UP', 'DOWN', 'LEFT', 'RIGHT'])
+            return True
+        return False
